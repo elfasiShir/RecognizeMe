@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { ButtonComponent } from './components/button/button.component';
+import {WebcamModule} from "ngx-webcam";
 
 @NgModule({
   declarations: [
@@ -14,10 +15,11 @@ import { ButtonComponent } from './components/button/button.component';
     FeedComponent,
     ButtonComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        WebcamModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
