@@ -1,4 +1,13 @@
 <!--<img src="../../../assets/e6700c3f-155a-4b2e-85bf-891aa907fa50.jpg" alt="image"/>
 <br/>-->
-<webcam ></webcam>
-<button>Capture</button>
+<webcam [height]="500" [width]="500" [trigger]="triggerObservable"
+        *ngIf="showWebcam"
+        (imageCapture)="handleImage($event)"
+        [imageQuality]="1"
+        (initError)="handleInitError($event)"
+></webcam>
+<button class="actionBtn" (click)="triggerSnapshot();" >Capture</button>
+<div class="snapshot" *ngIf="webcamImage">
+  <h2>Nice one!</h2>
+  <img [src]="webcamImage.imageAsDataUrl"/>
+</div>
