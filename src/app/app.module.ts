@@ -5,15 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FeedComponent } from './components/feed/feed.component';
-import { ButtonComponent } from './components/button/button.component';
 import {WebcamModule} from "ngx-webcam";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FeedComponent,
-    ButtonComponent
+    FeedComponent
   ],
     imports: [
         BrowserModule,
