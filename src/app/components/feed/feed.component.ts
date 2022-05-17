@@ -2,12 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import {Subject, Observable} from "rxjs";
 import {WebcamImage, WebcamInitError} from 'ngx-webcam';
 
+import {HttpClient}  from "@angular/common/http";
+
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit {
+
+  constructor(private http: HttpClient) { } // if there is a problem with webcam image you should prob init webcam image here
+
   // toggle webcam on/off
   public showWebcam = true;
 
@@ -22,6 +27,7 @@ export class FeedComponent implements OnInit {
   private trigger: Subject<void> = new Subject<void>();
 
   public triggerSnapshot(): void {
+    //post to http here!!!!
     this.trigger.next();
   }
   public get triggerObservable(): Observable<void> {
@@ -31,6 +37,10 @@ export class FeedComponent implements OnInit {
     console.info('received webcam image', webcamImage);
     //save image to database / compare image with database and reroute
     this.webcamImage = webcamImage;
+    this.http.post('http://localhost:4201/photo', webcamImage)
+      .subscribe(next => console.log(next))
+    // too heavy
+
   }
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
@@ -38,8 +48,6 @@ export class FeedComponent implements OnInit {
   public toggleWebcam(): void {
     this.showWebcam = !this.showWebcam;
   }
-
-  constructor() { } // if there is a problem with webcam image you should prob init webcam image here
 
   ngOnInit(): void {
   }

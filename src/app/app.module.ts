@@ -7,6 +7,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FeedComponent } from './components/feed/feed.component';
 import {WebcamModule} from "ngx-webcam";
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +18,8 @@ import {WebcamModule} from "ngx-webcam";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        WebcamModule
+        WebcamModule,
+        HttpClientModule,
     ],
   providers: [],
   bootstrap: [AppComponent]
