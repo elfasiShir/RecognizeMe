@@ -3,12 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"node server/server.ts\" \"ng serve\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "concurrently": "concurrently \"npm start\" \"server/node_modules/.bin/ts-node-dev server/server.ts\"",
-    "server": "server/node_modules/.bin/ts-node-dev server/server.ts"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -20,7 +18,7 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
-    "concurrently": "^7.1.0",
+    "concurrently": "^7.3.0",
     "face-api.js": "^0.22.2",
     "ngx-webcam": "^0.4.1",
     "rxjs": "~7.4.0",

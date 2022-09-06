@@ -1,20 +1,24 @@
-import * as express from 'express';
-export const routes = express.Router();
+// import * as express from 'express';
+// export const routes = express.Router();
 
 //face recognition imports
-import '@tensorflow/tfjs-node';
-import * as canvas from 'canvas';
-import * as faceapi from 'face-api.js';
+// import '@tensorflow/tfjs-node';
+// import * as canvas from 'canvas';
+// import * as faceapi from 'face-api.js';
 
+const express = require('express');
+let router = express.Router();
 
 //routes
-routes.get('/', (req, res) =>
-  res.send({hello: 'world'}));
-routes.get('/users', (req, res) =>
-  res.send([]));
-routes.post('/users', (req, res) =>
+router.get('/', (req, res) =>
+  res.send('world'));
+router.get('/users', (req, res) =>
+  res.send([{jhds:"jiosdlj"},"o0ovspjojs"]));
+router.post('/users', (req, res) =>
   res.send({body: req.body}));
-routes.post('/photo', (req,res) => {
+router.post('/photo', (req,res) => {
   res.send({
     body: req.body
   })});
+
+module.exports = router

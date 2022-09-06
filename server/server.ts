@@ -1,11 +1,12 @@
-const express = require('express')
-import { routes } from './routes';
-const bodyParser = require('body-parser')
 
+const express = require('express')
 const app = express();
 
+const routes = require('./routes.ts')
+const bodyParser = require('body-parser')
+
 // Allow any method from any host and log requests
-app.use((req, res, next) => {
+app.use((req, res , next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
