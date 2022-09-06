@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FeedComponent } from './components/feed/feed.component';
-import {WebcamModule} from "ngx-webcam";
+import { WebcamModule } from "ngx-webcam";
 
 import { HttpClientModule } from '@angular/common/http';
 

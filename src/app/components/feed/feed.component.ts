@@ -52,4 +52,8 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // clickFunction() {
+  //   style.filter = "blur(0px)";
+  // }
+
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {WebcamImage, WebcamModule} from "ngx-webcam";
+import { WebcamImage, WebcamModule} from "ngx-webcam";
 
 const routes: Routes = [];
 
