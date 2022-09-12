@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
 body{
-  margin: 0 !important;
+    font-family: 'Exo', sans-serif;
+    background: #282c34;
 }

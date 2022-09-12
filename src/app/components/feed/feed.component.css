@@ -1,0 +1,52 @@
+.webcam{
+  background-color: #20232a;
+  /* margin-left: 15%;
+  margin-right: 15%; */
+  
+}
+.corner-button {
+    font-family: "Lato", sans-serif;
+    letter-spacing: 0.02rem;
+    cursor: pointer;
+    background: transparent;
+    border: 0.5rem solid currentColor;
+    padding: 1.5rem 6rem;
+    font-size: 2.2rem;
+    color: #60d5f4;
+    position: relative;
+    transition: color 0.2s;
+    z-index: 1;
+  }
+  .corner-button:hover {
+    color: #64e4b7;
+  }
+  .corner-button:hover::before {
+    width: 0;
+  }
+  .corner-button:hover::after {
+    height: 0;
+  }
+  .corner-button:active {
+    border-width: 0.25rem;
+  }
+  .corner-button::before, .corner-button::after {
+    content: "";
+    position: absolute;
+    background: #282c34;
+    z-index: -1;
+    transition: all 0.3s;
+  }
+  .corner-button::before {
+    width: calc(100% - 3rem);
+    height: calc(101% + 1rem);
+    top: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .corner-button::after {
+    height: calc(100% - 3rem);
+    width: calc(101% + 1rem);
+    left: -0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
