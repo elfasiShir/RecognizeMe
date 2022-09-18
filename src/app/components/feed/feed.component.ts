@@ -26,21 +26,33 @@ export class FeedComponent implements OnInit {
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
 
+  //button configurations
+  public showLoading:boolean = false;
+  public buttonText:string = "Capture"
+
   public triggerSnapshot(): void {
-    //post to http here!!!!
     this.trigger.next();
   }
   public get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
   }
   public handleImage(webcamImage: WebcamImage): void {
+    this.showLoading = true;
+ 
     console.info('received webcam image', webcamImage);
     //save image to database / compare image with database and reroute
     this.webcamImage = webcamImage;
-    this.http.post('http://localhost:4201/photo', webcamImage)
-      .subscribe(next => console.log(next))
-    // too heavy
-
+    this.http.post('http://localhost:4201/RecognizePhoto', webcamImage)
+      .subscribe(next => {
+        console.log(next);
+        this.buttonText = "Retake";
+        this.showLoading = false;
+    },error=>  {
+      alert("not Recognize")
+      this.buttonText = "Retake";
+      this.showLoading = false;
+  })
+    
   }
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
@@ -52,8 +64,5 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // clickFunction() {
-  //   style.filter = "blur(0px)";
-  // }
 
 }

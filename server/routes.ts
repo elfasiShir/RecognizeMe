@@ -8,17 +8,11 @@
 
 const express = require('express');
 let router = express.Router();
-
+let image : MediaImage = null
 //routes
-router.get('/', (req, res) =>
-  res.send('world'));
-router.get('/users', (req, res) =>
-  res.send([{jhds:"jiosdlj"},"o0ovspjojs"]));
-router.post('/users', (req, res) =>
-  res.send({body: req.body}));
-router.post('/photo', (req,res) => {
-  res.send({
-    body: req.body
-  })});
+router.post('/RecognizePhoto', (req,res) => {
+  
+  res.send(401, {body : req.body});
+  });
 
 module.exports = router
