@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Subject, Observable} from "rxjs";
-import {WebcamImage, WebcamInitError} from 'ngx-webcam';
-
-import {HttpClient}  from "@angular/common/http";
+import { Subject, Observable } from "rxjs";
+import { WebcamImage, WebcamInitError } from 'ngx-webcam';
+import { HttpClient }  from "@angular/common/http";
 
 @Component({
   selector: 'app-feed',
@@ -11,6 +10,7 @@ import {HttpClient}  from "@angular/common/http";
 })
 export class FeedComponent implements OnInit {
 
+  private port = "http://localhost:4201";
   constructor(private http: HttpClient) { } // if there is a problem with webcam image you should prob init webcam image here
 
   // toggle webcam on/off
@@ -30,7 +30,9 @@ export class FeedComponent implements OnInit {
   public showLoading:boolean = false;
   public buttonText:string = "Capture"
 
+
   public triggerSnapshot(): void {
+    //post to http here!!!!
     this.trigger.next();
   }
   public get triggerObservable(): Observable<void> {
@@ -38,22 +40,23 @@ export class FeedComponent implements OnInit {
   }
   public handleImage(webcamImage: WebcamImage): void {
     this.showLoading = true;
- 
-    console.info('received webcam image', webcamImage);
     //save image to database / compare image with database and reroute
     this.webcamImage = webcamImage;
-    this.http.post('http://localhost:4201/RecognizePhoto', webcamImage)
-      .subscribe(next => {
-        console.log(next);
-        this.buttonText = "Retake";
-        this.showLoading = false;
-    },error=>  {
-      alert("not Recognize")
-      this.buttonText = "Retake";
-      this.showLoading = false;
-  })
-    
+    this.http.post(this.port + '/verify-user-face', webcamImage)
+    // this.http.post(this.port + '/create-user', webcamImage)
+      .subscribe(response => {
+        const user = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
+          if( user.id != null){
+            console.log("we did ittt  " + user.id)
+          }
+          else{
+            console.log("noo:(")
+          }
+          this.buttonText = "Retake"
+          this.showLoading = false
+      })
   }
+
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
   }
@@ -62,7 +65,11 @@ export class FeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
+  // clickFunction() {
+  //   style.filter = "blur(0px)";
+  // }
 
 }
