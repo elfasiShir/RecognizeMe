@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "ts-node-dev server.ts",
+    "serve": "nodemon server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
