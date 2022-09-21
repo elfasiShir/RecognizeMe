@@ -6,9 +6,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'RecognizeMe';
-  messages = this.http.get<any[]>('http://localhost:4201');
-
+  title: string = 'RecognizeMe';
+  
   constructor(private http : HttpClient) {
   }
 }
