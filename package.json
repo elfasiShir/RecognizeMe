@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"node server/server.ts\" \"ng serve\"",
+    "start": "concurrently \"nodemon server/server.ts\" \"ng serve\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -20,7 +20,9 @@
     "@angular/router": "~13.1.0",
     "concurrently": "^7.3.0",
     "face-api.js": "^0.22.2",
+    "mongoose": "^6.6.0",
     "ngx-webcam": "^0.4.1",
+    "python-shell": "^3.0.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -37,6 +39,8 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.5.2"
+    "nodemon": "^2.0.19",
+    "typescript": "~4.5.2",
+    "image-data-uri": "^2.0.1"
   }
 }

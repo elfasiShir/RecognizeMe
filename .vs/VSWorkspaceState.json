@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\database",
+    "\\server",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\components",
+    "\\src\\app\\components\\feed"
+  ],
+  "SelectedNode": "\\server\\package.json",
+  "PreviewInSolutionExplorer": false
+}
