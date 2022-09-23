@@ -1,8 +1,12 @@
 
 const router = require('express').Router()
-const UserSchema = require( '../database/UserImage')
 const mongoose = require('mongoose')
+
+const UserSchema = require( '../database/UserImage')
 const Image = mongoose.model('UserImage', UserSchema)
+
+// const ForumScheme = require('../database/Forum')
+// const Forum = mongoose.model("Forum", ForumScheme)
 
 const VerifyUserFace = './verifyUserFace.py'
 const EncodingNewFace = './encodingNewFace.py'
@@ -13,9 +17,7 @@ import { Options, PythonShell } from 'python-shell'
 router.get('/', (req, res) => {});
 
 router.post('/create-user', async (req, res) => {
-
-  const newImage = req.body.webcam
-  console.log(newImage)
+  const newImage = req.body.webcamImage._imageAsDataUrl
   let options: Options = {
     mode: 'text',
     args: [newImage, '--option=12']
@@ -33,35 +35,34 @@ router.post('/create-user', async (req, res) => {
   })
   await encodingPromise
 
-
   let savingUserPromise
   if (encodedData != "False" ) {
     let userImage = new Image(
       {
         _id: new mongoose.Types.ObjectId(),
         encoding: encodedData,
-        name: req.body.username
-        //name: "bat-chen"
+        name: req.body.username,
+        img: newImage
       })
 
      savingUserPromise = new Promise<void>((resolve, reject) => {
       try {
         userImage.save()
         res.status(200).json({
-          message: 'image saved!'
+          message: 'Image saved!'
         })
         resolve()
       } catch (err) {
         console.log(err)
-        res.status(500).json({
-          message: "something went wrong" + err
+        res.status(200).json({
+          message: "Could not save the image to db" + err
         })
         reject(err)
       }
     })
 
   } else {
-    res.status(500).json({
+    res.status(200).json({
       message: "could not find a face, please try again"
     })
   }
@@ -73,16 +74,13 @@ router.post('/verify-user-face', async (req, res) => {
   let getUsersPromise = new Promise((resolve, reject) => {
     try {
       Image.find().then((users) => {
-        // res.status(200).json({
-        //   users: users
-        // })
         knownUsers = JSON.stringify(users)
         resolve(users)
       })
     } catch (err) {
-      // res.status(500).json({
-      //   message: "could not get users, " + err
-      // })
+      res.status(200).json({
+        message: "Could not get users, " + err
+      })
       reject(err)
     }
   })
@@ -108,6 +106,13 @@ router.post('/verify-user-face', async (req, res) => {
     id: userId
   })
 });
+
+// router.post('/get-forum', async (req, res) => {
+//   let savingForumPromise
+//   let forum = new Forum({
+//
+//   })
+// })
 
 
 

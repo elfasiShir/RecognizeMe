@@ -2,7 +2,8 @@
 const mongoose = require('mongoose'), Schema = mongoose.Schema, UserScheme = new Schema({
     _id: Schema.Types.ObjectId,
     encoding: [] ,
-    name: String
+    name: String,
+    img: String
   }
 );
 

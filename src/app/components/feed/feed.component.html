@@ -20,27 +20,42 @@
     *ngIf="(showLoading == false) && (signUpMode == false)">
       <div > {{ buttonText }} </div>
     </button>
+    <br/><br/>
+<!--    <div class="input">-->
+<!--      <div class="text">-->
+<!--        <input type="text" placeholder="Placeholder" />-->
+<!--      </div>-->
+<!--      <button class="clear">-->
+<!--        <svg viewBox="0 0 24 24">-->
+<!--          <path class="line" d="M2 2L22 22" />-->
+<!--          <path class="long" d="M9 15L20 4" />-->
+<!--          <path class="arrow" d="M13 11V7" />-->
+<!--          <path class="arrow" d="M17 11H13" />-->
+<!--        </svg>-->
+<!--      </button>-->
+<!--    </div>-->
+
 
     <button class="corner-button"
-            (click)="changeSighnUpMode()"
+            (click)="changeSignUpMode()"
             *ngIf="(showLoading == false) && (signUpMode == false)">
             SignUp
     </button>
     </div>
     <!-- while signUpMode -->
     <br *ngIf="signUpMode" />
-    
+
     <div class="center">
     <input *ngIf="signUpMode" type="text"
            placeholder="username: "
            #name
            (keyup)="onInputChange(name.value)" />
 
-    <button  *ngIf="signUpMode" class="button-58" role="button" 
+    <button  *ngIf="signUpMode" class="button-58" role="button"
               (click)="triggerSnapshot();">
     Capture & SignUp</button>
     </div>
-    
+
     <!-- while loading -->
     <div *ngIf="showLoading" class="center">
       <div class="center">
@@ -130,7 +145,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- <div class="snapshot" *ngIf="webcamImage">
   <img [src]="webcamImage.imageAsDataUrl"/>
 </div> -->

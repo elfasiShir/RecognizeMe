@@ -36,8 +36,8 @@ export class FeedComponent implements OnInit {
 
 
 
-  
-  public changeSighnUpMode(){
+
+  public changeSignUpMode(){
     this.signUpMode = !this.signUpMode;
   }
 
@@ -51,26 +51,20 @@ export class FeedComponent implements OnInit {
     this.showLoading = true;
     //save image to database / compare image with database and reroute
     this.webcamImage = webcamImage;
-    
+
     //signup
     if(this.signUpMode){
       // console.log(this.username);
-      const data = JSON.stringify({
-        webcamImage: this.webcamImage,
+      const data = {
+        webcamImage: webcamImage,
         username: this.username
-      })
-      this.http.post(this.port + '/create-user', data)
+      }
+      this.http.post(this.port + '/create-user', JSON.parse(JSON.stringify(data)))    //Converting object to JSON and sending it to the server
       .subscribe(response => {
-        const user = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
-          if( user.id != null){
-            console.log("we did ittt  " + user.id)
-            
-          }
-          else{
-            alert("something happened")
-            console.log("couldnt capture")
-          }
-          this.showLoading = false;
+        const res = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
+        if(res.error) console.log(res.error.message)
+        else console.log(res.message)
+        this.showLoading = false;
       })
     }
     //login
@@ -88,7 +82,7 @@ export class FeedComponent implements OnInit {
           this.showLoading = false
       })
     }
-    
+
   }
 
   public handleInitError(error: WebcamInitError): void {
@@ -100,7 +94,7 @@ export class FeedComponent implements OnInit {
 
   onInputChange(name: string): void {
     this.username = name;
-  } 
+  }
 
 
   ngOnInit(): void {
