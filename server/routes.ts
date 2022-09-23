@@ -13,8 +13,9 @@ import { Options, PythonShell } from 'python-shell'
 router.get('/', (req, res) => {});
 
 router.post('/create-user', async (req, res) => {
-  const newImage = req.body._imageAsDataUrl
 
+  const newImage = req.body.webcam
+  console.log(newImage)
   let options: Options = {
     mode: 'text',
     args: [newImage, '--option=12']
@@ -39,8 +40,8 @@ router.post('/create-user', async (req, res) => {
       {
         _id: new mongoose.Types.ObjectId(),
         encoding: encodedData,
-        // name: req.body.username
-        name: "bat-chen"
+        name: req.body.username
+        //name: "bat-chen"
       })
 
      savingUserPromise = new Promise<void>((resolve, reject) => {

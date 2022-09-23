@@ -14,12 +14,33 @@
   </div>
   <br/>
     <!-- when startup -->
-    <button 
-    class="corner-button" role="button" (click)="triggerSnapshot();" 
-    *ngIf="showLoading == false">
+    <div class = "center">
+    <button
+    class="corner-button" role="button" (click)="triggerSnapshot();"
+    *ngIf="(showLoading == false) && (signUpMode == false)">
       <div > {{ buttonText }} </div>
     </button>
 
+    <button class="corner-button"
+            (click)="changeSighnUpMode()"
+            *ngIf="(showLoading == false) && (signUpMode == false)">
+            SignUp
+    </button>
+    </div>
+    <!-- while signUpMode -->
+    <br *ngIf="signUpMode" />
+    
+    <div class="center">
+    <input *ngIf="signUpMode" type="text"
+           placeholder="username: "
+           #name
+           (keyup)="onInputChange(name.value)" />
+
+    <button  *ngIf="signUpMode" class="button-58" role="button" 
+              (click)="triggerSnapshot();">
+    Capture & SignUp</button>
+    </div>
+    
     <!-- while loading -->
     <div *ngIf="showLoading" class="center">
       <div class="center">

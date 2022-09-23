@@ -1,9 +1,11 @@
 .webcam{
   background-color: #20232a;
-  /* margin-left: 15%;
-  margin-right: 15%; */
   
 }
+
+
+
+
 .corner-button {
     font-family: "Lato", sans-serif;
     letter-spacing: 0.02rem;
@@ -16,6 +18,7 @@
     position: relative;
     transition: color 0.2s;
     z-index: 1;
+    margin: 10px;
   }
   .corner-button:hover {
     color: #64e4b7;
@@ -147,4 +150,75 @@
       transform: scale(0.2);
     }
   }
+
+
+
+input[type="text"]{
+  background-color: transparent;
+  height: 40px;
+  width: 28%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 3px solid #72dffd;
+  color: rgb(202, 202, 202);
+  font-size: 2rem;
+  font-family: Phantomsans, sans-serif;
+  font-size: 30px;
+
+}
+input[type=text]:focus {
+  border-bottom: 3px solid #64e4e4;
+  outline: none;
+}
+
+.button-58 {
+  align-items: center;
+  background-color:#60d5f4;
+  border: 2px solid #60d5f4;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  fill: #000;
+  font-family: Phantomsans, sans-serif;
+  font-size: 25px;
+  height: 40px;
+  justify-content: center;
+  letter-spacing: -.8px;
+  line-height: 29px;
+  min-width: 140px;
+  outline: 0;
+  padding: 0 17px;
+  text-align: center;
+  text-decoration: none;
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
   
+  border-top-left-radius: 50px;
+  
+}
+
+
+.button-58:hover {
+  background-color: linear-gradient(11deg, rgba(96,213,244,1) 0%, rgba(100,228,183,1) 59%, rgba(100,228,183,1) 85%);
+  border-color: linear-gradient(11deg, rgba(96,213,244,1) 0%, rgba(100,228,183,1) 59%, rgba(100,228,183,1) 85%);
+  fill:#64e4b7;
+}
+.button-58:checked{
+  background-color: linear-gradient(11deg, rgba(96,213,244,1) 0%, rgba(100,228,183,1) 59%, rgba(100,228,183,1) 85%);;
+}
+.button-58:active {
+  background-color:#64e4b7;
+  border-color:#64e4b7;
+  fill:#fff;
+}
+
+@media (min-width: 768px) {
+  .button-58 {
+    min-width: 170px;
+  }
+}
