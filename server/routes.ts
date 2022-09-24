@@ -12,7 +12,6 @@ const VerifyUserFace = './verifyUserFace.py'
 const EncodingNewFace = './encodingNewFace.py'
 import { Options, PythonShell } from 'python-shell'
 
-
 //routes
 router.get('/', (req, res) => {});
 
@@ -41,8 +40,7 @@ router.post('/create-user', async (req, res) => {
       {
         _id: new mongoose.Types.ObjectId(),
         encoding: encodedData,
-        name: req.body.username,
-        img: newImage
+        name: req.body.username
       })
 
      savingUserPromise = new Promise<void>((resolve, reject) => {
