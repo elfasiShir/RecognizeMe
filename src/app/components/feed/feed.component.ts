@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject, Observable } from "rxjs";
 import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { HttpClient }  from "@angular/common/http";
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
@@ -11,7 +11,7 @@ import { HttpClient }  from "@angular/common/http";
 export class FeedComponent implements OnInit {
 
   private port = "http://localhost:4201";
-  constructor(private http: HttpClient) { } // if there is a problem with webcam image you should prob init webcam image here
+  constructor(private http: HttpClient, public router: Router) { } // if there is a problem with webcam image you should prob init webcam image here
 
   // toggle webcam on/off
   public showWebcam = true;
@@ -62,9 +62,14 @@ export class FeedComponent implements OnInit {
       this.http.post(this.port + '/create-user', JSON.parse(JSON.stringify(data)))    //Converting object to JSON and sending it to the server
       .subscribe(response => {
         const res = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
-        if(res.error) console.log(res.error.message)
-        else console.log(res.message)
-        this.showLoading = false;
+        if(res.error) {
+          console.log(res.error.message)
+          this.router.navigate(['posts-page']);
+        }
+        else {
+          console.log(res.message)
+          this.showLoading = false;
+        }
       })
     }
     //login
@@ -74,12 +79,15 @@ export class FeedComponent implements OnInit {
         const user = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
           if( user.id != null){
             console.log("we did ittt  " + user.id)
+            this.showLoading = false
+            this.router.navigate(['posts-page']);
           }
           else{
             console.log("noo:(")
+            this.buttonText = "Retake"
+            this.showLoading = false
           }
-          this.buttonText = "Retake"
-          this.showLoading = false
+          
       })
     }
 
@@ -95,7 +103,6 @@ export class FeedComponent implements OnInit {
   onInputChange(name: string): void {
     this.username = name;
   }
-
 
   ngOnInit(): void {
 
