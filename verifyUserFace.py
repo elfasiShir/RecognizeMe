@@ -20,26 +20,26 @@ def arranging_data( data ):
 
 
 if __name__ == '__main__':
-  user_list = json.loads(sys.argv[1])
-  unknown_decoded_data = ur.urlopen( sys.argv[2] )           #Converting _imageAsDataUrl to image
-  unknown_image = face_recognition.load_image_file( unknown_decoded_data )
-  isAUser = bool(False)
-  user_id = ""
+    list = json.loads(sys.argv[1])["users"]
+    unknown_decoded_data = ur.urlopen( sys.argv[2] )           #Converting _imageAsDataUrl to image
+    unknown_image = face_recognition.load_image_file( unknown_decoded_data )
 
-  if len(face_recognition.face_locations(unknown_image)) != 0:
-     for user in user_list:
+    isAUser = bool(False)
+    user_id = ""
 
-        known_encoding = arranging_data( user["encoding"] )
-        unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
+    if len(face_recognition.face_locations(unknown_image)) != 0:
+        for user in list:
+            known_encoding = arranging_data( user["encoding"] )
+            unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
 
-        try:
-           if face_recognition.compare_faces([known_encoding], unknown_encoding)[0]:
-               isAUser = bool(True)
-               user_id = user["_id"]
+            try:
+                if face_recognition.compare_faces([known_encoding], unknown_encoding)[0]:
+                  isAUser = bool(True)
+                  user_id = user["_id"]
+            except Exception as e:
+                print( e )
 
-        except Exception as e:
-           print( e )
-        if isAUser is bool(True):
-           break
-  print(user_id)
+            if isAUser is bool(True):
+                break
+    print(user_id)
 

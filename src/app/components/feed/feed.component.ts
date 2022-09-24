@@ -54,7 +54,6 @@ export class FeedComponent implements OnInit {
 
     //signup
     if(this.signUpMode){
-      // console.log(this.username);
       const data = {
         webcamImage: webcamImage,
         username: this.username
@@ -87,7 +86,7 @@ export class FeedComponent implements OnInit {
             this.buttonText = "Retake"
             this.showLoading = false
           }
-          
+
       })
     }
 

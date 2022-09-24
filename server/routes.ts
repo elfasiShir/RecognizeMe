@@ -49,20 +49,20 @@ router.post('/create-user', async (req, res) => {
       try {
         userImage.save()
         res.status(200).json({
-          message: 'Image saved!'
+          message: 'image saved!'
         })
         resolve()
       } catch (err) {
         console.log(err)
-        res.status(200).json({
-          message: "Could not save the image to db" + err
+        res.status(500).json({
+          message: "something went wrong" + err
         })
         reject(err)
       }
     })
 
   } else {
-    res.status(200).json({
+    res.status(500).json({
       message: "could not find a face, please try again"
     })
   }
@@ -74,7 +74,7 @@ router.post('/verify-user-face', async (req, res) => {
   let getUsersPromise = new Promise((resolve, reject) => {
     try {
       Image.find().then((users) => {
-        knownUsers = JSON.stringify(users)
+        knownUsers = JSON.stringify({"users" : users })
         resolve(users)
       })
     } catch (err) {
@@ -84,28 +84,33 @@ router.post('/verify-user-face', async (req, res) => {
       reject(err)
     }
   })
-
   await getUsersPromise
+
   const unknown = req.body._imageAsDataUrl;
   let options: Options = {
     mode: 'text',
     args: [knownUsers, unknown, '--option=123']
   }
 
-
   let userId
+
   let myPromise = new Promise((resolve, reject) => {
     PythonShell.run(VerifyUserFace, options, (err, results) => {
       if (err) reject(err)
-      userId = results
-      resolve(results)
+      else {
+        userId = results
+        resolve(results)
+      }
     })
   })
   await myPromise
+
+
   res.status(200).json({
     id: userId
   })
 });
+
 
 // router.post('/get-forum', async (req, res) => {
 //   let savingForumPromise
@@ -113,7 +118,6 @@ router.post('/verify-user-face', async (req, res) => {
 //
 //   })
 // })
-
 
 
 module.exports = router
