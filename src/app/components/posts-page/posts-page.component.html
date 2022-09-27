@@ -1,7 +1,11 @@
 <div class="background">
-    <input  class="" type="text" 
+    <input  class="field" type="text" 
             placeholder="new post: " 
-            #post />
+            #content 
+            (keyup.enter)="post(content.value)"/>
+            <br/>
+
+            
 <div class="area">
 <div class='light x1'></div>
   <div class='light x2'></div>

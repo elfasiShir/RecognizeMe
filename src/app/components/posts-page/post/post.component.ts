@@ -10,8 +10,10 @@ export class PostComponent implements OnInit {
   @Input() username = "";
   @Input() content = "";
   constructor() { }
-
+  
   ngOnInit(): void {
   }
+
+  
 
 }

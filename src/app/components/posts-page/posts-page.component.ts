@@ -19,8 +19,12 @@ export class PostsPageComponent implements OnInit {
     {username: 'eliraz', post: 'whats up'}
   ]
   constructor( private cookies: CookieService ) { }
+  private content:string = "";
 
   private userId = ""
+  post(content: string) : void{
+    this.content = content;
+  }
   ngOnInit(): void {
     this.userId =  this.cookies.get("_id")
   }
