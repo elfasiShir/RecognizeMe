@@ -5,8 +5,9 @@ const mongoose = require('mongoose')
 const UserSchema = require( '../database/UserImage')
 const Image = mongoose.model('UserImage', UserSchema)
 
-// const ForumScheme = require('../database/Forum')
-// const Forum = mongoose.model("Forum", ForumScheme)
+const PostScheme = require('../database/Post')
+const Post = mongoose.model("Post", PostScheme)
+
 
 const VerifyUserFace = './verifyUserFace.py'
 const EncodingNewFace = './encodingNewFace.py'
@@ -109,14 +110,150 @@ router.post('/verify-user-face', async (req, res) => {
   })
 });
 
+router.post('/new-post', async (req, res) => {
+  let username
+  let getUsernamePromise = new Promise((resolve, reject) => {
+    try {
+      Image.findById(mongoose.Types.ObjectId(req.body.userId)).then((object) => {
+        username = object.name
+        resolve(object.name)
+      })
+    } catch (err) {
+      res.status(200).json({
+        message: "Could not get user, " + err
+      })
+      reject(err)
+    }
+  })
+  await getUsernamePromise
 
-// router.post('/get-forum', async (req, res) => {
-//   let savingForumPromise
-//   let forum = new Forum({
-//
-//   })
-// })
+  let post = new Post({
+    _id: new mongoose.Types.ObjectId(),
+    user_id: req.body.userId,
+    username: username,
+    content: req.body.content,
+    likes: [],
+    comments: []
+  })
 
+  let savingPostPromise = new Promise<void>((resolve, reject) => {
+    try {
+      post.save()
+      res.status(200).json({
+        message: 'post saved!'
+      })
+      resolve()
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({
+        message: "could not save the post" + err
+      })
+      reject(err)
+    }
+  })
+  await savingPostPromise
+});
+
+router.get('/all-posts', async (req, res) => {
+  let isAUser
+  let getUsernamePromise = new Promise((resolve, reject) => {
+    try {
+      Image.findById(mongoose.Types.ObjectId(req.body.userId)).then((object) => {
+        isAUser = true
+        resolve(true)
+      })
+    } catch (err) {
+      res.status(200).json({
+        message: "Could not get user, " + err
+      })
+      reject(err)
+    }
+  })
+  await getUsernamePromise
+
+  if(isAUser) {
+    let jsonPosts
+    let getPostsPromise = new Promise((resolve, reject) => {
+      try {
+        Post.find().then((posts) => {
+          console.log(posts)
+          jsonPosts = JSON.stringify({"posts": posts})
+          resolve(jsonPosts)
+        })
+      } catch (err) {
+        res.status(200).json({
+          message: "Could not get posts, " + err
+        })
+        reject(err)
+      }
+    })
+    await getPostsPromise
+
+    res.status(200).json({
+      jsonPosts
+    })
+  }
+});
+
+router.patch('/add-comment-to-post', async (req, res) => {
+  let user
+  let getUserPromise = new Promise((resolve, reject) => {
+    try {
+      Image.findById(mongoose.Types.ObjectId(req.body.userId)).then((object) => {
+        user = object
+        resolve(object)
+      })
+    } catch (err) {
+      res.status(200).json({
+        message: "Could not get user, " + err
+      })
+      reject(err)
+    }
+  })
+  await getUserPromise
+
+
+  let post
+  let getPostPromise = new Promise((resolve, reject) => {
+    try {
+      Post.findById(mongoose.Types.ObjectId(req.body.postId)).then((object) => {
+        post = JSON.parse(JSON.stringify(object))
+        resolve(post)
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Could not get post, " + err
+      })
+      reject(err)
+    }
+  })
+  await getPostPromise
+
+  const commentJson = {
+    content: req.body.comment,
+    date: Date.now(),
+    username: user.name,
+    userId: req.body.userId
+  }
+
+  const listingQuery = { _id: req.body.postId };
+  const updates = {
+    $push: { comments: commentJson }
+  };
+
+  try {
+    Post.updateOne( listingQuery, updates, () => {
+      res.status(200).json({
+        message: "Post updated successfully!"
+      })
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "could not update the post" + error
+    })
+  }
+
+});
 
 module.exports = router
 
