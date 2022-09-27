@@ -146,7 +146,6 @@ router.get('/all-posts', async (req, res) => {
     let getPostsPromise = new Promise((resolve, reject) => {
       try {
         Post.find().then((posts) => {
-          console.log(posts)
           jsonPosts = JSON.stringify({"posts": posts})
           resolve(jsonPosts)
         })
@@ -230,6 +229,22 @@ router.patch('/unlike-post', async (req, res) => {
     })
   }
 });
+
+router.get('/all-likes', async (req, res) => {
+  try {
+    if (await getUsername(req.body.userId) != null) {
+      let post = await getPost(req.body.userId, req.body.postId);
+      res.status(200).json({
+        likes: post["likes"]
+      })
+    }
+  }
+  catch (err) {
+    res.status(500).json({
+      message: "could not find user or post"
+    })
+  }
+})
 
 async function getUsername(userId) {
   let username = null
