@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from "ngx-cookie-service";
 
 
 @Component({
@@ -17,12 +18,15 @@ export class PostsPageComponent implements OnInit {
     {username: 'shir', post: 'its meea'}, {username: 'shir', post: 'hello'},
     {username: 'eliraz', post: 'whats up'}
   ]
-  constructor() { }
-  @Input() content = "";
-  onInputChange(content: string): void {
+  constructor( private cookies: CookieService ) { }
+  private content:string = "";
+
+  private userId = ""
+  post(content: string) : void{
     this.content = content;
   }
   ngOnInit(): void {
+    this.userId =  this.cookies.get("_id")
   }
 
 }

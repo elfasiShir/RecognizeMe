@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { Subject, Observable } from "rxjs";
 import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { HttpClient }  from "@angular/common/http";
 import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { CookieService } from "ngx-cookie-service";
+
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 export class FeedComponent implements OnInit {
 
   private port = "http://localhost:4201";
-  constructor(private http: HttpClient, public router: Router) { } // if there is a problem with webcam image you should prob init webcam image here
+  constructor(private http: HttpClient, public router: Router, private cookies: CookieService) { } // if there is a problem with webcam image you should prob init webcam image here
 
   // toggle webcam on/off
   public showWebcam = true;
@@ -63,12 +65,12 @@ export class FeedComponent implements OnInit {
         const res = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
         if(res.error) {
           console.log(res.error.message)
-          this.showLoading = false;
         }
         else {
           console.log(res.message)
           this.showLoading = false;
           this.router.navigate(['posts-page']);
+
         }
       })
     }
@@ -78,7 +80,8 @@ export class FeedComponent implements OnInit {
       .subscribe(response => {
         const user = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
           if( user.id != null){
-            console.log("we did ittt  " + user.id)
+            console.log("we did ittt  ")
+            this.cookies.set("_id", user.id)
             this.showLoading = false
             this.router.navigate(['posts-page']);
           }
