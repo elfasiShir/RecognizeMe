@@ -1,7 +1,8 @@
 <div class="background">
     <input  class="" type="text" 
             placeholder="new post: " 
-            #post />
+            #content 
+            (keyup)="onInputChange(content.value)" />
 <div class="area">
 <div class='light x1'></div>
   <div class='light x2'></div>

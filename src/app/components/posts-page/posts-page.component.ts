@@ -18,7 +18,10 @@ export class PostsPageComponent implements OnInit {
     {username: 'eliraz', post: 'whats up'}
   ]
   constructor() { }
-
+  @Input() content = "";
+  onInputChange(content: string): void {
+    this.content = content;
+  }
   ngOnInit(): void {
   }
 
