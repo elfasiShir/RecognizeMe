@@ -10,13 +10,15 @@ import { WebcamModule } from "ngx-webcam";
 
 import { HttpClientModule } from '@angular/common/http';
 import { PostsPageComponent } from './components/posts-page/posts-page.component';
+import { PostComponent } from './components/posts-page/post/post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FeedComponent,
-    PostsPageComponent
+    PostsPageComponent,
+    PostComponent,
   ],
     imports: [
         BrowserModule,

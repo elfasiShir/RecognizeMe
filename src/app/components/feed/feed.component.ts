@@ -63,11 +63,12 @@ export class FeedComponent implements OnInit {
         const res = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
         if(res.error) {
           console.log(res.error.message)
-          this.router.navigate(['posts-page']);
+          this.showLoading = false;
         }
         else {
           console.log(res.message)
           this.showLoading = false;
+          this.router.navigate(['posts-page']);
         }
       })
     }
