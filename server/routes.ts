@@ -111,21 +111,7 @@ router.post('/verify-user-face', async (req, res) => {
 });
 
 router.post('/new-post', async (req, res) => {
-  let username
-  let getUsernamePromise = new Promise((resolve, reject) => {
-    try {
-      Image.findById(mongoose.Types.ObjectId(req.body.userId)).then((object) => {
-        username = object.name
-        resolve(object.name)
-      })
-    } catch (err) {
-      res.status(200).json({
-        message: "Could not get user, " + err
-      })
-      reject(err)
-    }
-  })
-  await getUsernamePromise
+  let username = getUsername(req.body.userId)
 
   let post = new Post({
     _id: new mongoose.Types.ObjectId(),
@@ -155,23 +141,7 @@ router.post('/new-post', async (req, res) => {
 });
 
 router.get('/all-posts', async (req, res) => {
-  let isAUser
-  let getUsernamePromise = new Promise((resolve, reject) => {
-    try {
-      Image.findById(mongoose.Types.ObjectId(req.body.userId)).then((object) => {
-        isAUser = true
-        resolve(true)
-      })
-    } catch (err) {
-      res.status(200).json({
-        message: "Could not get user, " + err
-      })
-      reject(err)
-    }
-  })
-  await getUsernamePromise
-
-  if(isAUser) {
+  if(await getUsername(req.body.userId) != null) {
     let jsonPosts
     let getPostsPromise = new Promise((resolve, reject) => {
       try {
@@ -196,43 +166,12 @@ router.get('/all-posts', async (req, res) => {
 });
 
 router.patch('/add-comment-to-post', async (req, res) => {
-  let user
-  let getUserPromise = new Promise((resolve, reject) => {
-    try {
-      Image.findById(mongoose.Types.ObjectId(req.body.userId)).then((object) => {
-        user = object
-        resolve(object)
-      })
-    } catch (err) {
-      res.status(200).json({
-        message: "Could not get user, " + err
-      })
-      reject(err)
-    }
-  })
-  await getUserPromise
-
-
-  let post
-  let getPostPromise = new Promise((resolve, reject) => {
-    try {
-      Post.findById(mongoose.Types.ObjectId(req.body.postId)).then((object) => {
-        post = JSON.parse(JSON.stringify(object))
-        resolve(post)
-      })
-    } catch (err) {
-      res.status(500).json({
-        message: "Could not get post, " + err
-      })
-      reject(err)
-    }
-  })
-  await getPostPromise
+  let username = getUsername(req.body.userId)
 
   const commentJson = {
     content: req.body.comment,
     date: Date.now(),
-    username: user.name,
+    username: username,
     userId: req.body.userId
   }
 
@@ -252,8 +191,76 @@ router.patch('/add-comment-to-post', async (req, res) => {
       message: "could not update the post" + error
     })
   }
-
 });
 
+router.patch('/like-post', async (req, res) => {
+  const listingQuery = { _id: req.body.postId };
+  const updates = {
+    $push: { likes: req.body.userId }
+  };
+
+  try {
+    Post.updateOne( listingQuery, updates, () => {
+      res.status(200).json({
+        message: "like post!"
+      })
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "could not like the post" + error
+    })
+  }
+});
+
+router.patch('/unlike-post', async (req, res) => {
+  const listingQuery = { _id: req.body.postId };
+  const updates = {
+    $pull: { likes: req.body.userId }
+  };
+
+  try {
+    Post.updateOne( listingQuery, updates, () => {
+      res.status(200).json({
+        message: "unlike post"
+      })
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "could not unlike the post" + error
+    })
+  }
+});
+
+async function getUsername(userId) {
+  let username = null
+  let getUsernamePromise = new Promise((resolve, reject) => {
+    try {
+      Image.findById(mongoose.Types.ObjectId(userId)).then((object) => {
+        username = object.name
+        resolve(object.name)
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+  await getUsernamePromise
+  return username
+}
+
+async function getPost(userId, postId){
+  let post = null
+  let getPostPromise = new Promise((resolve, reject) => {
+    try {
+      Post.findById(mongoose.Types.ObjectId(postId)).then((object) => {
+        post = JSON.parse(JSON.stringify(object))
+        resolve(post)
+      })
+    } catch (err) {
+      reject(err)
+    }
+  })
+  await getPostPromise
+  return post
+}
 module.exports = router
 

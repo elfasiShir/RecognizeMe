@@ -23,7 +23,6 @@ export class PostsPageComponent implements OnInit {
   private userId = ""
   ngOnInit(): void {
     this.userId =  this.cookies.get("_id")
-    alert("cookies from post page" + this.userId)
   }
 
 }
