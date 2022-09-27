@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { WebcamModule } from "ngx-webcam";
+import { CookieService} from "ngx-cookie-service";
 
 import { HttpClientModule } from '@angular/common/http';
 import { PostsPageComponent } from './components/posts-page/posts-page.component';
@@ -32,7 +33,7 @@ import { PostComponent } from './components/posts-page/post/post.component';
           {path: '**', component: FeedComponent}
         ]),
     ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
