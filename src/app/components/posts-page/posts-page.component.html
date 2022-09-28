@@ -17,11 +17,12 @@
   <div class='light x8'></div>
   <div class='light x9'></div>
         <div>
-        <app-post 
-            *ngFor="let post of EXAMPLE_POSTS"
+        <!-- <app-post 
+            *ngFor="let post of posts"
             [username]="post.username"
             [content]="post.post"
-            ></app-post>
+            [likes] = "post.likes"
+            ></app-post> -->
         </div>
     </div>
 </div>

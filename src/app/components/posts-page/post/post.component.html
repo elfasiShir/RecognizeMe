@@ -1,5 +1,9 @@
-<button class="button-35">
+<button class="button-35" (click)="like()" >
     <h1>{{this.username + " : "}}</h1>
     <p>{{'" ' + this.content + ' "'}}</p>
+    
+    <div class="likes"> {{this.likes}} + " "
+    <div class="gg-heart"></div>
+    </div>
 </button>
 <br/>

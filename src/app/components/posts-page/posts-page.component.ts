@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgIterable, OnInit } from '@angular/core';
 import { CookieService } from "ngx-cookie-service";
+import { HttpClient }  from "@angular/common/http";
+import { NgClass } from '@angular/common';
 
 
 @Component({
@@ -8,25 +10,23 @@ import { CookieService } from "ngx-cookie-service";
   styleUrls: ['./posts-page.component.scss']
 })
 export class PostsPageComponent implements OnInit {
-  public EXAMPLE_POSTS = [
-    {username: 'shir', post: 'hello'},
-    {username: 'eliraz', post: 'whats up'},
-    {username: 'shir', post: 'its meea'}, {username: 'shir', post: 'hello'},
-    {username: 'eliraz', post: 'whats up'},
-    {username: 'shir', post: 'its meea'}, {username: 'shir', post: 'hello'},
-    {username: 'eliraz', post: 'whats up'},
-    {username: 'shir', post: 'its meea'}, {username: 'shir', post: 'hello'},
-    {username: 'eliraz', post: 'whats up'}
-  ]
-  constructor( private cookies: CookieService ) { }
-  private content:string = "";
-
+  private port = "http://localhost:4201";
+  constructor( private cookies: CookieService, private http: HttpClient) { }
+  private content : string = "";
+  public posts : JSON[]| undefined;
   private userId = ""
   post(content: string) : void{
     this.content = content;
   }
   ngOnInit(): void {
+    
+  }
+  ngBeforeContentInit(): void {
     this.userId =  this.cookies.get("_id")
+    this.http.post(this.port + '/all-posts', this.userId)
+    .subscribe(response => {
+      
+    })
   }
 
 }
