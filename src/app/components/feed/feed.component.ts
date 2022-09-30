@@ -65,6 +65,8 @@ export class FeedComponent implements OnInit {
         const res = JSON.parse((JSON.stringify(response)))  //Converting object to JSON
         if(res.error) {
           console.log(res.error.message)
+          this.showLoading = false;
+          alert(res.error.message)
         }
         else {
           console.log(res.message)
