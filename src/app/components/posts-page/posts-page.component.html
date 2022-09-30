@@ -1,28 +1,42 @@
-<div class="background">
-    <input  class="field" type="text" 
-            placeholder="new post: " 
-            #content 
+<div class="total">
+  <div class="background">
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <button class="logout" (click)="this.logout()">
+    <i class="bi bi-box-arrow-right"></i>
+  </button>
+    <input  class="field" type="text"
+            placeholder="Write a new post! "
+            #content
             (keyup.enter)="post(content.value)"/>
             <br/>
 
-            
+
 <div class="area">
-<div class='light x1'></div>
-  <div class='light x2'></div>
-  <div class='light x3'></div>
-  <div class='light x4'></div>
-  <div class='light x5'></div>
-  <div class='light x6'></div>
-  <div class='light x7'></div>
-  <div class='light x8'></div>
-  <div class='light x9'></div>
-        <div>
-        <!-- <app-post 
-            *ngFor="let post of posts"
-            [username]="post.username"
-            [content]="post.post"
-            [likes] = "post.likes"
-            ></app-post> -->
+<!--<div class='light x1'></div>-->
+<!--  <div class='light x2'></div>-->
+<!--  <div class='light x3'></div>-->
+<!--  <div class='light x4'></div>-->
+<!--  <div class='light x5'></div>-->
+<!--  <div class='light x6'></div>-->
+<!--  <div class='light x7'></div>-->
+        <div *ngFor="let post of posts" >
+        <app-post
+            [post] = "post"
+        ></app-post>
+
         </div>
     </div>
 </div>
+

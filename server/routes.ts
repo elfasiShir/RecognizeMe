@@ -48,7 +48,8 @@ router.post('/create-user', async (req, res) => {
       try {
         userImage.save()
         res.status(200).json({
-          message: 'image saved!'
+          message: 'image saved!',
+          _id: userImage._id
         })
         resolve()
       } catch (err) {
@@ -111,19 +112,18 @@ router.post('/verify-user-face', async (req, res) => {
 });
 
 router.post('/new-post', async (req, res) => {
-  let username = getUsername(req.body.userId)
 
-  let post = new Post({
-    _id: new mongoose.Types.ObjectId(),
-    user_id: req.body.userId,
-    username: username,
-    content: req.body.content,
-    likes: [],
-    comments: []
-  })
-
-  let savingPostPromise = new Promise<void>((resolve, reject) => {
+  let savingPostPromise = new Promise<void>(async (resolve, reject) => {
     try {
+      let username = await getUsername(req.body.userId)
+      let post = new Post({
+        _id: new mongoose.Types.ObjectId(),
+        user_id: req.body.userId,
+        username: username,
+        content: req.body.content,
+        likes: [],
+        comments: []
+      })
       post.save()
       res.status(200).json({
         message: 'post saved!'
@@ -141,13 +141,13 @@ router.post('/new-post', async (req, res) => {
 });
 
 router.get('/all-posts', async (req, res) => {
-  if(await getUsername(req.body.userId) != null) {
-    let jsonPosts
+  if(await getUsername(req.query.userId) != null) {
+    let Posts
     let getPostsPromise = new Promise((resolve, reject) => {
       try {
         Post.find().then((posts) => {
-          jsonPosts = JSON.stringify({"posts": posts})
-          resolve(jsonPosts)
+          Posts = posts
+          resolve(posts)
         })
       } catch (err) {
         res.status(200).json({
@@ -159,7 +159,7 @@ router.get('/all-posts', async (req, res) => {
     await getPostsPromise
 
     res.status(200).json({
-      jsonPosts
+      posts: Posts
     })
   }
 });
@@ -230,21 +230,21 @@ router.patch('/unlike-post', async (req, res) => {
   }
 });
 
-router.get('/all-likes', async (req, res) => {
-  try {
-    if (await getUsername(req.body.userId) != null) {
-      let post = await getPost(req.body.userId, req.body.postId);
-      res.status(200).json({
-        likes: post["likes"]
-      })
-    }
-  }
-  catch (err) {
-    res.status(500).json({
-      message: "could not find user or post"
-    })
-  }
-})
+// router.get('/all-likes', async (req, res) => {
+//   try {
+//     if (await getUsername(req.body.userId) != null) {
+//       let post = await getPost(req.body.userId, req.body.postId);
+//       res.status(200).json({
+//         likes: post["likes"]
+//       })
+//     }
+//   }
+//   catch (err) {
+//     res.status(500).json({
+//       message: "could not find user or post"
+//     })
+//   }
+// });
 
 async function getUsername(userId) {
   let username = null
@@ -252,7 +252,7 @@ async function getUsername(userId) {
     try {
       Image.findById(mongoose.Types.ObjectId(userId)).then((object) => {
         username = object.name
-        resolve(object.name)
+        resolve(object)
       })
     } catch (err) {
       reject(err)

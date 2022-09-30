@@ -12,6 +12,7 @@ import { CookieService} from "ngx-cookie-service";
 import { HttpClientModule } from '@angular/common/http';
 import { PostsPageComponent } from './components/posts-page/posts-page.component';
 import { PostComponent } from './components/posts-page/post/post.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,11 +28,12 @@ import { PostComponent } from './components/posts-page/post/post.component';
         WebcamModule,
         HttpClientModule,
         RouterModule.forRoot([
-          {path: 'login', component: FeedComponent  },
-          {path: 'posts-page', component: PostsPageComponent},
-          {path: '', redirectTo: '/login', pathMatch: 'full'},
-          {path: '**', component: FeedComponent}
+            {path: 'login', component: FeedComponent},
+            {path: 'posts-page', component: PostsPageComponent},
+            {path: '', redirectTo: '/login', pathMatch: 'full'},
+            {path: '**', component: FeedComponent}
         ]),
+        FormsModule,
     ],
   providers: [CookieService],
   bootstrap: [AppComponent]
