@@ -68,6 +68,7 @@ export class FeedComponent implements OnInit {
         }
         else {
           console.log(res.message)
+          this.cookies.set("_id", res._id)
           this.showLoading = false;
           this.router.navigate(['posts-page']);
 

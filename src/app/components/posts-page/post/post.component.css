@@ -1,23 +1,24 @@
-
-.button-35 {
+@import '../../../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+.post{
   text-align: left;
   background-color: aliceblue;
   opacity: 0.8;
   border-radius: 12px;
+  position: relative;
   box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
   box-sizing: border-box;
   color: #121212;
-  cursor: pointer;
   flex: 1 1 auto;
-  width: 90%;
+  width: 95%;
   height: auto;
+  top: 10px;
   font-family: Inter,sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
   line-height: 1;
-  margin: 10px;
+  margin: 0 2.5% ;
   outline: none;
-  padding: 1rem 1.2rem;
+  padding: 1.2rem .4rem .2em 1.2em;
   text-decoration: none;
   transition: box-shadow .6s,-webkit-box-shadow .9s;
   white-space: nowrap;
@@ -26,50 +27,17 @@
   word-wrap: break-word;
 }
 
-.button-35:hover {
+.post:hover {
   box-shadow: #352e97 0 0 0 3px, transparent 0 0 0 0;
 }
 .likes{
+  text-align: right;
+}
+.heart{
+  position: relative;
   display: inline-flex;
-}
-.gg-heart,
-.gg-heart::after {
-    border: 2px solid;
-    border-top-left-radius: 100px;
-    border-top-right-radius: 100px;
-    width: 10px;
-    height: 8px;
-    border-bottom: 0
-}
-.gg-heart {
-    box-sizing: border-box;
-    position: relative;
-    transform:
-        translate(
-            calc(-10px / 2 * var(--ggs,1)),
-            calc(-6px / 2 * var(--ggs,1))
-        )
-        rotate(-45deg)
-        scale(var(--ggs,1));
-    display: block
-}
-.gg-heart::after,
-.gg-heart::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute
-}
-.gg-heart::after {
-    right: -9px;
-    transform: rotate(90deg);
-    top: 5px
-}
-.gg-heart::before {
-    width: 11px;
-    height: 11px;
-    border-left: 2px solid;
-    border-bottom: 2px solid;
-    left: -2px;
-    top: 3px
+  padding: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
 }

@@ -1,9 +1,12 @@
-<button class="button-35" (click)="like()" >
+<div class="post" xmlns="http://www.w3.org/1999/html">
     <h1>{{this.username + " : "}}</h1>
     <p>{{'" ' + this.content + ' "'}}</p>
-    
-    <div class="likes"> {{this.likes}} + " "
-    <div class="gg-heart"></div>
+    <div class="likes"> {{this.likes.length}}
+    <button
+      class="heart"
+      [ngStyle]=" {'color': doILikeThePost ? 'red': 'grey'}"
+      (click)="this.likeOrUnlike()"
+    > <i class="bi bi-suit-heart-fill"></i> </button>
     </div>
-</button>
+</div>
 <br/>
