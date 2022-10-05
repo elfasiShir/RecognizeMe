@@ -1,4 +1,4 @@
-# RecognizeMe
+![](https://github.com/user/RecognizeMe.png)
 
 RecognizeMe is a face recognition login page
 utilizing: 
